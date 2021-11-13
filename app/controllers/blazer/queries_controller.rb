@@ -64,7 +64,7 @@ module Blazer
 
       @smart_vars = {}
       @sql_errors = []
-      data_source = Blazer.data_sources[@query.data_source]
+      data_source = current_visitor.data_sources[@query.data_source]
       @bind_vars.each do |var|
         smart_var, error = parse_smart_variables(var, data_source)
         @smart_vars[var] = smart_var if smart_var
@@ -91,7 +91,7 @@ module Blazer
       @run_id = blazer_params[:run_id]
       @query = Query.find_by(id: params[:query_id]) if params[:query_id]
       data_source = @query.data_source if @query && @query.data_source
-      @data_source = Blazer.data_sources[data_source]
+      @data_source = current_visitor.data_sources[data_source]
 
       run_cohort_analysis if @cohort_analysis
 

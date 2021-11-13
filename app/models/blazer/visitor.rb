@@ -7,6 +7,8 @@ module Blazer
       ActiveRecord::Base.connection.execute("CREATE USER '#{self.user}' IDENTIFIED BY '#{self.password}';")
       ActiveRecord::Base.connection.execute("CREATE DATABASE #{database};")
       ActiveRecord::Base.connection.execute("GRANT ALL ON #{database}.* TO '#{user}';")
+      ActiveRecord::Base.connection.execute("GRANT USAGE ON bikeshare.* TO '#{user}'")
+      ActiveRecord::Base.connection.execute("GRANT SELECT ON bikeshare.* TO '#{user}'")
     end
 
     def db_config
@@ -20,6 +22,10 @@ module Blazer
           database => {
             "database"=> database,
             "url"=>"mysql2://#{user}:#{password}@#{base[:host]}:#{base[:port]}/#{database}"
+          },
+          'bikeshare' => {
+            "database"=> 'bikeshare',
+            "url"=>"mysql2://#{user}:#{password}@#{base[:host]}:#{base[:port]}/bikeshare"
           }
         }
       }

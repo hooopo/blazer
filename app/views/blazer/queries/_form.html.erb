@@ -28,34 +28,19 @@
       </div>
       <div class="col-xs-4">
 
-<!--         <div class="form-group">
-          <%= f.label :name %>
-          <%= f.text_field :name, class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :description %>
-          <%= f.text_area :description, placeholder: "Optional", style: "height: 80px;", class: "form-control" %>
-        </div>
-        <div class="form-group text-right">
-          <%= f.submit "For Enter Press", class: "hide" %>
-          <% if @query.persisted? %>
-            <%= link_to "Delete", query_path(@query), method: :delete, "data-confirm" => "Are you sure?", class: "btn btn-danger" %>
-            <%= f.submit "Fork", class: "btn btn-info" %>
-          <% end %>
-          <%= f.submit @query.persisted? ? "Update" : "Create", class: "btn btn-success" %>
-        </div>
-        <% if @query.persisted? %>
-          <% dashboards_count = @query.dashboards.count %>
-          <% checks_count = @query.checks.count %>
-          <% words = [] %>
-          <% words << pluralize(dashboards_count, "dashboard") if dashboards_count > 0 %>
-          <% words << pluralize(checks_count, "check") if checks_count > 0 %>
-          <% if words.any? %>
-            <div class="alert alert-info">
-              Part of <%= words.to_sentence %>. Be careful when editing.
+        
+          <div class="card">
+            <img class="card-img-top" src="https://github.com/pingcap/tidb/raw/master/docs/logo_with_text.png" alt="Card image cap">
+            <div class="card-body">
+              <p class="card-text">
+                <% ActiveRecord::Base.connection.execute('select tidb_version()').each do |line| %>
+                  <%= simple_format line[0].split("\n")[0, 6].join("\n") %>
+                <% end %>
+              </p>
             </div>
-          <% end %>
-        <% end %> -->
+          </div>
+ 
+        
       </div>
     </div>
   <% end %>
@@ -68,7 +53,7 @@
 
 <script>
   <%= blazer_js_var "params", variable_params(@query) %>
-  <%= blazer_js_var "previewStatement", Hash[Blazer.data_sources.map { |k, v| [k, (v.preview_statement rescue "")] }] %>
+  <%= blazer_js_var "previewStatement", Hash[current_visitor.data_sources.map { |k, v| [k, (v.preview_statement rescue "")] }] %>
 
   var app = new Vue({
     el: "#app",
@@ -156,7 +141,8 @@
           enableLiveAutocompletion: false,
           highlightActiveLine: false,
           fontSize: 12,
-          minLines: 10
+          minLines: 10,
+          value: "SELECT tidb_version()"
         })
         editor.renderer.setShowGutter(true)
         editor.renderer.setPrintMarginColumn(false)
