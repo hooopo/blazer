@@ -9,6 +9,8 @@ module Blazer
     clear_helpers
 
     protect_from_forgery with: :exception
+    helper_method :current_visitor
+
 
     if ENV["BLAZER_PASSWORD"]
       http_basic_authenticate_with name: ENV["BLAZER_USERNAME"], password: ENV["BLAZER_PASSWORD"]
@@ -20,6 +22,23 @@ module Blazer
 
     if Blazer.before_action
       before_action Blazer.before_action.to_sym
+    end
+
+    before_action :init_visitor
+
+    def init_visitor
+      if cookies['current_id'].present? && Blazer::Visitor.where(session_id: cookies['current_id']).first 
+        @current_visitor = Blazer::Visitor.where(session_id: cookies['current_id']).first
+      else
+        id = SecureRandom.hex(10)
+        cookies['current_id'] = id 
+        @current_visitor = Blazer::Visitor.create!(session_id: id)
+      end
+    end
+
+    def current_visitor
+      init_visitor
+      @current_visitor
     end
 
     if Blazer.override_csp

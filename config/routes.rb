@@ -21,5 +21,5 @@ Blazer::Engine.routes.draw do
     end
   end
 
-  root to: "queries#home"
+  root to: "queries#new"
 end

@@ -218,7 +218,7 @@ module Blazer
     private
 
       def set_data_source
-        @data_source = Blazer.data_sources[params[:data_source]]
+        @data_source = current_visitor.data_sources[params[:data_source]]
 
         unless Query.new(data_source: @data_source.id).editable?(blazer_user)
           render_forbidden
