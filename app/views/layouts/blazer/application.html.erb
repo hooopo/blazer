@@ -1,9 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= blazer_title ? blazer_title : "Blazer" %></title>
+    <title><%= blazer_title ? blazer_title : "TryTiDB" %></title>
 
     <meta charset="utf-8" />
+    <meta name="description" content="An online TiDB SQL playground for testing, debugging and sharing SQL snippets.">
+    <meta name="keywords" content="database tidb sql tikv tidb cloud mysql fiddle">
+
+    <meta property="og:title" content="TryTiDB - ✨ A tool for easy online testing and share TiDB queries">
+    <meta property="og:description" content="An online TiDB SQL playground for testing, debugging and sharing SQL snippets.">
+    <meta property="og:image" content="https://user-images.githubusercontent.com/63877/141671812-2a4a56d1-a23d-4410-9e7f-3817119b1f28.png">
+    <meta property="og:url" content="https://trytidb.com">
+    <meta property="og:site_name" content="TryTiDB">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@hooopo">
+    <meta name="twitter:creator" content="@hooopo">
+
     <%= favicon_link_tag "blazer/favicon.png" %>
     <%= stylesheet_link_tag "blazer/application" %>
     <%= javascript_include_tag "blazer/application" %>
