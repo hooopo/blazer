@@ -21,11 +21,13 @@ module Blazer
         "data_sources"=> { 
           database => {
             "database"=> database,
-            "url"=>"mysql2://#{user}:#{password}@#{base[:host]}:#{base[:port]}/#{database}"
+            "url"=>"mysql2://#{user}:#{password}@#{base[:host]}:#{base[:port]}/#{database}",
+            "timeout" => 15
           },
           'bikeshare' => {
             "database"=> 'bikeshare',
-            "url"=>"mysql2://#{user}:#{password}@#{base[:host]}:#{base[:port]}/bikeshare"
+            "url"=>"mysql2://#{user}:#{password}@#{base[:host]}:#{base[:port]}/bikeshare",
+            "timeout" => 15
           }
         }
       }
